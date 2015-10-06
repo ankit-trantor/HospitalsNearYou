@@ -11,14 +11,14 @@ import android.widget.ListView;
 
 import com.example.root.hospitalsnearyou.Activity.MainActivity;
 import com.example.root.hospitalsnearyou.DB.HospitalDataBase;
-import com.example.root.hospitalsnearyou.ModelClass.ModelClassDB;
+import com.example.root.hospitalsnearyou.ModelClass.Hospital;
 import com.example.root.hospitalsnearyou.R;
 import com.example.root.hospitalsnearyou.adapter.HospNameAdap;
 
 import java.util.ArrayList;
 
 public class ListFragment1 extends Fragment {
-    ArrayList<ModelClassDB> hospNameList = new ArrayList<>();
+    ArrayList<Hospital> hospNameList = new ArrayList<>();
     HospitalDataBase dbHelper;
     HospNameAdap hospNameAdap;
     ListView listView;

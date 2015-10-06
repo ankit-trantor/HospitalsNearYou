@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.root.hospitalsnearyou.DB.HospitalDataBase;
-import com.example.root.hospitalsnearyou.ModelClass.ModelClassDB;
+import com.example.root.hospitalsnearyou.ModelClass.Hospital;
 import com.example.root.hospitalsnearyou.R;
 
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class HospitalDetailsFrag extends Fragment {
     int position;
     String cno;
     String address;
-    ModelClassDB modelClassDB;
-    ArrayList<ModelClassDB> arrayList = new ArrayList<>();
+    Hospital hospital;
+    ArrayList<Hospital> arrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,7 +38,7 @@ public class HospitalDetailsFrag extends Fragment {
         position = getArguments().getInt("position");
         dbHelper = new HospitalDataBase(getActivity());
         arrayList.addAll(dbHelper.readFromDatabase());
-        modelClassDB = dbHelper.getSinglerecord(arrayList.get(position).getRowId());
+        hospital = dbHelper.getSinglerecord(arrayList.get(position).getRowId());
         findId(rootView);
         emailTextViewAction();
         websiteTextViewAction();
@@ -103,7 +103,7 @@ public class HospitalDetailsFrag extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Uri s = Uri.parse("geo:0,0?q=" + modelClassDB.getPvt() + ", " + address);
+        Uri s = Uri.parse("geo:0,0?q=" + hospital.getPvt() + ", " + address);
         if (address != null) {
             showMap(s);
         }
@@ -141,26 +141,26 @@ public class HospitalDetailsFrag extends Fragment {
     }
 
     private void setAllText() {
-        email.setText(modelClassDB.getEmail());
+        email.setText(hospital.getEmail());
         email.setTextSize(15);
-        website.setText(modelClassDB.getWebsite());
-        if (!modelClassDB.getWebsite().equals("NA")) {
+        website.setText(hospital.getWebsite());
+        if (!hospital.getWebsite().equals("NA")) {
             website.setTextColor(Color.BLUE);
         }
-        if (!modelClassDB.getEmail().equals("NA")) {
+        if (!hospital.getEmail().equals("NA")) {
             email.setTextColor(Color.BLUE);
         }
-        hospitalName.setText(modelClassDB.getPvt());
-        timestamp.setText(modelClassDB.getTimestamp());
-        state.setText(modelClassDB.getState());
-        city.setText(modelClassDB.getCity());
-        specialization.setText(modelClassDB.getSpecializations());
-        systemsOfMedicine.setText(modelClassDB.getSystemsOfMedicine());
-        service.setText(modelClassDB.getServices());
-        category.setText(modelClassDB.getCategory());
-        pincode.setText(modelClassDB.getPincode());
-        contact.setText(modelClassDB.getContact());
-        String contact = modelClassDB.getContact();
+        hospitalName.setText(hospital.getPvt());
+//        timestamp.setText(hospital.getTimestamp());
+        state.setText(hospital.getState());
+        city.setText(hospital.getCity());
+        specialization.setText(hospital.getSpecializations());
+        systemsOfMedicine.setText(hospital.getSystemsOfMedicine());
+        service.setText(hospital.getServices());
+        category.setText(hospital.getCategory());
+        pincode.setText(hospital.getPincode());
+        contact.setText(hospital.getContact());
+        String contact = hospital.getContact();
         if (contact.contains("Phone:")) {
             String[] splits = contact.split("Phone:");
             address = splits[0];

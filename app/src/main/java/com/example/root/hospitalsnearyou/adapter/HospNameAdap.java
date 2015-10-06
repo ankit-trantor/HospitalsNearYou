@@ -10,17 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.root.hospitalsnearyou.Fragment.ListFragment1;
-import com.example.root.hospitalsnearyou.ModelClass.ModelClassDB;
+import com.example.root.hospitalsnearyou.ModelClass.Hospital;
 import com.example.root.hospitalsnearyou.R;
 
 import java.util.ArrayList;
 
-public class HospNameAdap extends ArrayAdapter<ModelClassDB> {
-    ArrayList<ModelClassDB> arrayList = new ArrayList<>();
+public class HospNameAdap extends ArrayAdapter<Hospital> {
+    ArrayList<Hospital> arrayList = new ArrayList<>();
     View row;
     Context context;
     ListFragment1 listFragment1 = new ListFragment1();
-    public HospNameAdap(Context context, ArrayList<ModelClassDB> playlistArray) {
+    public HospNameAdap(Context context, ArrayList<Hospital> playlistArray) {
         super(context, R.layout.fragment_list, android.R.id.text1, playlistArray);
         this.arrayList = playlistArray;
         this.context = context;
@@ -37,7 +37,7 @@ public class HospNameAdap extends ArrayAdapter<ModelClassDB> {
         } else
             row = convertView;
 
-        ModelClassDB modelclass = arrayList.get(position);
+        Hospital modelclass = arrayList.get(position);
 
         TextView textView = (TextView) row.findViewById(R.id.itemOnList);
         textView.setSingleLine(true);
