@@ -50,7 +50,7 @@ public class DownloadService extends Service {
                 Looper.prepare();
                 if (isNetworkAvailable(getApplicationContext())) {
                     for (int i = 0; i <=8; i++) {
-                        jsonParser.openHttpConnection("https://data.gov.in/node/356981/datastore/export/json");
+                        jsonParser.openHttpConnection("https://data.gov.in/api/datastore/resource.json?resource_id=b4d77a09-9cdc-4a5b-b900-8fddb78f3cbe&api-key=YOURKEY");
 
                         if (status == false) {
                             addToDatabase(jsonObject);
