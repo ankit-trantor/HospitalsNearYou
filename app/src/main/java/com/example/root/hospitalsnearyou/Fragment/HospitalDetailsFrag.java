@@ -1,8 +1,12 @@
 package com.example.root.hospitalsnearyou.Fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,14 +24,16 @@ import com.example.root.hospitalsnearyou.R;
 
 import java.util.ArrayList;
 
-public class HospitalDetailsFrag extends Fragment {
+public class HospitalDetailsFrag extends Fragment  {
     HospitalDataBase dbHelper;
     TextView pincode, email, website, contact, hospitalName, specialization, service, timestamp, systemsOfMedicine, city;
     TextView state, category, phoneNo;
+    protected LocationListener locationListener;
     Bundle bundle = new Bundle();
     int position;
     String cno;
     String address;
+    Double lat,longitude;
     Hospital hospital;
     ArrayList<Hospital> arrayList = new ArrayList<>();
 
@@ -37,8 +43,8 @@ public class HospitalDetailsFrag extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_hospital_details, container, false);
         position = getArguments().getInt("position");
         dbHelper = new HospitalDataBase(getActivity());
-        arrayList.addAll(dbHelper.readFromDatabase());
-        hospital = dbHelper.getSinglerecord(arrayList.get(position).getRowId());
+        arrayList.addAll(dbHelper.readHospitalDataFromDatabase());
+        hospital = dbHelper.getSinglerecordForHosp(arrayList.get(position).getRowId());
         findId(rootView);
         emailTextViewAction();
         websiteTextViewAction();
@@ -89,12 +95,6 @@ public class HospitalDetailsFrag extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         MenuItem menuItem = menu.findItem(R.id.map);
@@ -102,19 +102,70 @@ public class HospitalDetailsFrag extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Uri s = Uri.parse("geo:0,0?q=" + hospital.getPvt() + ", " + address);
-        if (address != null) {
-            showMap(s);
-        }
-        return super.onOptionsItemSelected(item);
+//        Uri s = Uri.parse("geo:0,0?q=" + hospital.getPvt() + ", " + address);
+//        if (address != null) {
+//            showMap(s);
+//        }
+//        return super.onOptionsItemSelected(item);
+//        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+//        List<Address> addresses = null;
+//        try {
+//            addresses = geocoder.getFromLocation(18.5203, 73.856, 1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        String cityName = addresses.get(0).getAddressLine(0);
+//        String stateName = addresses.get(0).getAddressLine(1);
+//        String countryName = addresses.get(0).getAddressLine(2);
+//        return true;
+//        LocationManager locMan = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+//        locMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, new LocationListener() {
+//            @Override
+//            public void onLocationChanged(Location location) {
+//                longitude=location.getLongitude();
+//                lat=location.getLatitude();
+//                Log.e("lat",""+longitude);
+//                Log.e("lat",""+lat);
+//            }
+
+        LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+       // if (location != null) {
+
+            lat = location.getLatitude();
+            longitude = location.getLongitude();
+            Log.d("old", "lat :  " + lat);
+            Log.d("old", "long :  " + longitude);
+
+        //}
+//        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+//        List<Address> addresses = null;
+//        try {
+//           // addresses = gcd.getFromLocation(lat, longitude, 1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        if (addresses.size() > 0) {
+//            Log.e("hi", "" + addresses.get(0).getLocality());//city
+//            Log.e("hi", "" + addresses.get(0).getAddressLine(1));//local area
+//            Log.e("hi", "" + addresses.get(0).getAdminArea());//state
+//        }
+
+        return true;
     }
 
     private void findId(View rootView) {
         email = (TextView) rootView.findViewById(R.id.EmailName);
         website = (TextView) rootView.findViewById(R.id.websiteName);
         hospitalName = (TextView) rootView.findViewById(R.id.HospitalName);
-        timestamp = (TextView) rootView.findViewById(R.id.TimestampName);
         state = (TextView) rootView.findViewById(R.id.StateName);
         city = (TextView) rootView.findViewById(R.id.Cityname);
         specialization = (TextView) rootView.findViewById(R.id.specializationName);
@@ -176,4 +227,6 @@ public class HospitalDetailsFrag extends Fragment {
             phoneNo.setTextColor(Color.BLUE);
         }
     }
+
+
 }

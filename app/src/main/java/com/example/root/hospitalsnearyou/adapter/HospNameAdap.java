@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.root.hospitalsnearyou.Fragment.ListFragment1;
+import com.example.root.hospitalsnearyou.Fragment.HospitalList;
 import com.example.root.hospitalsnearyou.ModelClass.Hospital;
 import com.example.root.hospitalsnearyou.R;
 
@@ -19,7 +19,7 @@ public class HospNameAdap extends ArrayAdapter<Hospital> {
     ArrayList<Hospital> arrayList = new ArrayList<>();
     View row;
     Context context;
-    ListFragment1 listFragment1 = new ListFragment1();
+    HospitalList hospitalList = new HospitalList();
     public HospNameAdap(Context context, ArrayList<Hospital> playlistArray) {
         super(context, R.layout.fragment_list, android.R.id.text1, playlistArray);
         this.arrayList = playlistArray;
@@ -44,13 +44,13 @@ public class HospNameAdap extends ArrayAdapter<Hospital> {
         textView.setText(modelclass.getPvt());
         textView.setTextColor(Color.BLACK);
         ImageView imageView = (ImageView) row.findViewById(R.id.playlist_image);
-        imageView.setImageResource(R.drawable.hospital);
+        imageView.setImageResource(R.drawable.w1);
 
 
        /* row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listFragment1.onClick(position);
+                hospitalList.onClick(position);
             }
         });*/
         return row;

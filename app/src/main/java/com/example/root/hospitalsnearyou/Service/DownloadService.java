@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class DownloadService extends Service {
     JSONParser jsonParser = new JSONParser();
-    JSONObject jsonObject = null;
+    JSONObject bloodBankJson = null;
     JSONObject hospitalJson = null;
     HospitalDataBase hospitalDataBase;
     SharedPreferences sharedPreferences;
@@ -40,8 +40,8 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        hospitalDataBase = new HospitalDataBase(getApplicationContext());
-//        hospitalDataBase.readFromDatabase();
+        hospitalDataBase = new HospitalDataBase(getApplicationContext());
+        hospitalDataBase.readHospitalDataFromDatabase();
 //        sharedPreferences = getSharedPreferences("status", MODE_PRIVATE);
 //        status = sharedPreferences.getBoolean("s", false);
 
@@ -51,15 +51,17 @@ public class DownloadService extends Service {
 //                Looper.prepare();
 //                if (isNetworkAvailable(getApplicationContext())) {
 //                    for (int i = 0; i <=8; i++) {
-                    jsonObject = jsonParser.openHttpConnectionForBloodBank("https://data.gov.in/node/356981/datastore/export/json");
-                    hospitalJson = jsonParser.openHttpConnection("https://data.gov.in/node/356921/datastore/export/json");
+                if(hospitalDataBase.readBloddBankDataFromDB().size()==0 && hospitalDataBase.readHospitalDataFromDatabase().size()==0) {
+                    bloodBankJson = jsonParser.openHttpConnectionForBloodBank("https://data.gov.in/node/356981/datastore/export/json");
+                    hospitalJson = jsonParser.openHttpConnection("https://data.gov.in/node/323921/datastore/export/json");
 //                        if (status == false) {
-                    addToDatabase(jsonObject);
                     addHospitaltoDb(hospitalJson);
+                    addToBloodBankDB(bloodBankJson);
 ////                        }
 //                    }
 //                    Looper.loop();
 //
+                }
                 }
 
 //            }
@@ -67,7 +69,7 @@ public class DownloadService extends Service {
         }).start();
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
 //        editor.putBoolean("s", true).commit();
-//        ArrayList<Hospital> arrayList = hospitalDataBase.readFromDatabase();
+//        ArrayList<Hospital> arrayList = hospitalDataBase.readHospitalDataFromDatabase();
 //        Log.e("sss", "" + arrayList.size());
         return 0;
     }
@@ -110,17 +112,18 @@ public class DownloadService extends Service {
             Log.e("Size ::::", "" + arrayList.size());
 //            hospitalDataBase.open();
             if (arrayList.size() > 0) {
-                hospitalDataBase.insertIntoDb(arrayList);
+                hospitalDataBase.open();
+                hospitalDataBase.insertIntoDbHospital(arrayList);
             }
 
         }
     }
 
-    private void addToDatabase(JSONObject jsonObject1) {
-        ArrayList<Hospital> arrayList = new ArrayList<>();
+    private void addToBloodBankDB(JSONObject jsonObject1) {
+        ArrayList<BloodBank> arrayList = new ArrayList<>();
         if (jsonObject1 != null) {
             try {
-                JSONArray jsonArray = this.jsonObject.getJSONArray("data");
+                JSONArray jsonArray = this.bloodBankJson.getJSONArray("data");
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONArray array = jsonArray.getJSONArray(i);
@@ -162,8 +165,7 @@ public class DownloadService extends Service {
                     bloodBank.setServiceTime(strings.get(15).toString());
                     bloodBank.setLatitude(strings.get(16).toString());
                     bloodBank.setLangitude(strings.get(17).toString());
-
-//                    arrayList.add(bloodBank);
+                    arrayList.add(bloodBank);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -171,7 +173,8 @@ public class DownloadService extends Service {
             Log.e("Size ::::", "" + arrayList.size());
 //            hospitalDataBase.open();
             if (arrayList.size() > 0) {
-                hospitalDataBase.insertIntoDb(arrayList);
+                hospitalDataBase.open();
+                hospitalDataBase.insertIntoDbBloodBank(arrayList);
             }
 
         }

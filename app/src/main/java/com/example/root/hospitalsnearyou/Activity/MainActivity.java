@@ -4,22 +4,28 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.root.hospitalsnearyou.Fragment.BloodBankDetails;
+import com.example.root.hospitalsnearyou.Fragment.BloodBankList;
 import com.example.root.hospitalsnearyou.Fragment.GotoUserHospDetails;
 import com.example.root.hospitalsnearyou.Fragment.HomeFrag;
 import com.example.root.hospitalsnearyou.Fragment.HospitalDetailsFrag;
-import com.example.root.hospitalsnearyou.Fragment.ListFragment1;
+import com.example.root.hospitalsnearyou.Fragment.HospitalList;
 import com.example.root.hospitalsnearyou.ModelClass.NavDrawerItem;
 import com.example.root.hospitalsnearyou.R;
 import com.example.root.hospitalsnearyou.Service.DownloadService;
@@ -119,9 +125,20 @@ public class MainActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_container, hospitalDetailsFrag).commit();
-    }
 
-    public void gotoDeatailsFrag(int position) {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if (location != null) {
+
+            Double lat = location.getLatitude();
+            Double longitude = location.getLongitude();
+            Log.d("old", "lat :  " + lat);
+            Log.d("old", "long :  " + longitude);
+
+        }
+    }//fused location
+
+    public void hospitalDetailsFrag(int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         HospitalDetailsFrag hospitalDetailsFrag = new HospitalDetailsFrag();
@@ -130,12 +147,12 @@ public class MainActivity extends Activity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_container, hospitalDetailsFrag).commit();
     }
-    public void gotoDeatailsFrag1(int position, String state, String city) {
+
+    public void gotoUserHospDetails(int position, String state, String city) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putString("state",state);
-        bundle.putString("city",city);
-
+        bundle.putString("state", state);
+        bundle.putString("city", city);
         GotoUserHospDetails hospitalDetailsFrag = new GotoUserHospDetails();
         hospitalDetailsFrag.setArguments(bundle);
         FragmentManager fragmentManager = getFragmentManager();
@@ -143,9 +160,16 @@ public class MainActivity extends Activity {
         fragmentTransaction.replace(R.id.frame_container, hospitalDetailsFrag).commit();
     }
 
-    /**
-     * Slide menu item click listener
-     */
+    public void gotoBloodBankDeatails(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        BloodBankDetails hospitalDetailsFrag = new BloodBankDetails();
+        hospitalDetailsFrag.setArguments(bundle);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_container, hospitalDetailsFrag).commit();
+    }
+
     private class SlideMenuClickListener implements
             ListView.OnItemClickListener {
         @Override
@@ -158,31 +182,35 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.map).setVisible(!drawerOpen);
-        MenuItem map = menu.findItem(R.id.map);
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            if (mDrawerToggle.onOptionsItemSelected(item)) {
+                return true;
+            }
+            switch (item.getItemId()) {
+                case R.id.action_settings:
+                    return true;
+                default:
+                    return super.onOptionsItemSelected(item);
+            }
+        }
+
+
+        @Override
+        public boolean onPrepareOptionsMenu (Menu menu){
+            // if nav drawer is opened, hide the action items
+            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+            menu.findItem(R.id.map).setVisible(!drawerOpen);
+            MenuItem map = menu.findItem(R.id.map);
 //        map.setVisible(false);
-        return super.onPrepareOptionsMenu(menu);
-    }
+            return super.onPrepareOptionsMenu(menu);
+        }
 
     private void displayView(int position) {
         Fragment fragment = null;
@@ -200,7 +228,7 @@ public class MainActivity extends Activity {
                 break;
 
             case 1:
-                ListFragment1 playListFragment = new ListFragment1();
+                HospitalList playListFragment = new HospitalList();
                 FragmentManager listManager = getFragmentManager();
                 FragmentTransaction listTransaction = listManager.beginTransaction();
                 listTransaction.replace(R.id.frame_container, playListFragment, "");
@@ -213,6 +241,15 @@ public class MainActivity extends Activity {
 
             case 2:
 //                fragment = new PhotosFragment();
+                BloodBankList bloodBankList = new BloodBankList();
+                FragmentManager listManagerBlood = getFragmentManager();
+                FragmentTransaction listTransactionBlood = listManagerBlood.beginTransaction();
+                listTransactionBlood.replace(R.id.frame_container, bloodBankList, "");
+                listTransactionBlood.commit();
+                mDrawerList.setItemChecked(position, true);
+                mDrawerList.setSelection(position);
+                setTitle(navMenuTitles[position]);
+                mDrawerLayout.closeDrawer(mDrawerList);
                 break;
             case 3:
 //                fragment = new CommunityFragment();

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_floating_material_light"
-    tools:context="com.example.root.hospitalsnearyou.Fragment.ListFragment1">
+    tools:context="com.example.root.hospitalsnearyou.Fragment.HospitalList">
 
     <ListView
         android:id="@+id/listHospName"

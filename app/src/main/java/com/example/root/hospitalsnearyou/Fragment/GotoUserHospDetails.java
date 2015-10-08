@@ -40,7 +40,7 @@ public class GotoUserHospDetails extends Fragment {
         userState = getArguments().getString("state");
         dbHelper = new HospitalDataBase(getActivity());
         arrayList.addAll(dbHelper.stateWiseHospital(userState,userCity));
-        hospital = dbHelper.getSinglerecord(arrayList.get(position).getRowId());
+        hospital = dbHelper.getSinglerecordForHosp(arrayList.get(position).getRowId());
         findId(rootView);
         emailTextViewAction();
         websiteTextViewAction();
@@ -118,7 +118,6 @@ public class GotoUserHospDetails extends Fragment {
         email = (TextView) rootView.findViewById(R.id.EmailName);
         website = (TextView) rootView.findViewById(R.id.websiteName);
         hospitalName = (TextView) rootView.findViewById(R.id.HospitalName);
-        timestamp = (TextView) rootView.findViewById(R.id.TimestampName);
         state = (TextView) rootView.findViewById(R.id.StateName);
         city = (TextView) rootView.findViewById(R.id.Cityname);
         specialization = (TextView) rootView.findViewById(R.id.specializationName);
@@ -155,7 +154,6 @@ public class GotoUserHospDetails extends Fragment {
             email.setTextColor(Color.BLUE);
         }
         hospitalName.setText(hospital.getPvt());
-        timestamp.setText(hospital.getTimestamp());
         state.setText(hospital.getState());
         city.setText(hospital.getCity());
         specialization.setText(hospital.getSpecializations());

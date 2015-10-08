@@ -13,7 +13,7 @@
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
         <item>@drawable/home</item>
-        <item>@drawable/hospital</item>
+        <item>@drawable/hospital_icon1</item>
         <item>@drawable/blood</item>
     </array>
     <string name="title_activity_hospital_name">HospitalNameActivity</string>

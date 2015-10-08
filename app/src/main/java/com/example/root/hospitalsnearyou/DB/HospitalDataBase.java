@@ -16,49 +16,46 @@ import java.util.ArrayList;
  * Created by root on 28/9/15.
  */
 public class HospitalDataBase {
-    private static final String KEY_ROW_ID_HOSPITAL = "_id";
-    //    private static final String KEY_HOSPITAL_ID = "hospitalId";
-//    private static final String KEY_TIMESTAMP = "timestamp";
-    public static final String KEY_STATE_HOSPITAL = "state";
-    public static final String KEY_CITY_HOSPITAL = "city";
-    private static final String KEY_HOSPITAL_PRIVATE = "pvt";
-    private static final String KEY_CATEGORY_HOSPITAL = "category";
-    private static final String KEY_SYSTEM_OF_MEDICINE = "SystemsOfMedicine";
-    private static final String KEY_CONTACT_HOSPITAL = "contact";
-    private static final String KEY_PINCODE_HOSPITAL = "pincode";
-    private static final String KEY_EMAIL_HOSPITAL = "email";
-    private static final String KEY_WEBSITE_HOSPITAL = "website";
-    private static final String KEY_Specializations = "Specializations";
-    private static final String KEY_SERVICES = "Services";
-    private static final String HOSPITAL_TABLE_NAME = "hospital";
-    private static final int DATABASE_VERSION = 1;
+
+    //DataBase name and Version
     private static final String DATABASE_NAME = "hospitalDb";
+    private static final int DATABASE_VERSION = 6;
 
-
-    private static final String KEY_ROW_ID = "_id";
-    private static final String KEY_HOSPITAL_ID = "hospitalId";
-    private static final String KEY_STATE = "state";
-    private static final String KEY_CITY = "city";
-    private static final String KEY_ADDRESS = "address";
-    private static final String KEY_DISTRICT = "district";
-    private static final String KEY_HOSPITAL_NAME = "h_name";
-    private static final String KEY_contact = "contact";
-    private static final String KEY_PINCODE = "pincode";
-    private static final String KEY_email = "email";
-    private static final String KEY_website = "website";
-    private static final String KEY_category = "category";
-    private static final String KEY_BLOOD_COMPONENT = "blood_component";
-    private static final String KEY_BLOOD_GROUP = "blood_group";
-    private static final String KEY_SERVICE_TIME = "service_time";
-    private static final String KEY_LATITUDE = "latitude";
-    private static final String KEY_HELPLINE = "helpline";
-    private static final String KEY_FAX = "fax";
-    private static final String KEY_LONGITUDE = "longitude";
+    //Table Name
+    private static final String HOSPITAL_TABLE_NAME = "hospital";
     private static final String BLOOD_BANK_TABLE_NAME = "bloodBank";
 
 
+    //fields for Hospital
+    private static final String SYSTEM_OF_MEDICINE = "SystemsOfMedicine";
+    private static final String Specializations = "Specializations";
+    private static final String SERVICES = "Services";
+
+    //fields for Blood Bank
+    private static final String BLOOD_COMPONENT = "blood_component";
+    private static final String BLOOD_GROUP = "blood_group";
+    private static final String SERVICE_TIME = "service_time";
+    private static final String LATITUDE = "latitude";
+    private static final String HELPLINE = "helpline";
+    private static final String FAX = "fax";
+    private static final String LONGITUDE = "longitude";
+    private static final String ADDRESS = "address";
+    private static final String DISTRICT = "district";
+
+    //common Fields
+    private static final String HOSPITAL_NAME = "h_name";
+    private static final String CONTACT = "contact";
+    private static final String PINCODE = "pincode";
+    private static final String EMAIL = "email";
+    private static final String WEBSITE = "website";
+    private static final String CATEGORY = "category";
+    private static final String STATE = "state";
+    private static final String CITY = "city";
+    private static final String KEY_ROW_ID = "_id";
+
+
     private static final String DATABASE_CREATE_HOSPITAL = "create table hospital(_id integer primary key autoincrement default 1, "
-            + " state text , city text , pvt text , category text , SystemsOfMedicine text ," +
+            + " state text , city text , h_name text , category text , SystemsOfMedicine text ," +
             "contact text , pincode text , email text ," +
             "website text , Specializations text , Services text);";
 
@@ -79,20 +76,20 @@ public class HospitalDataBase {
         this.hospitalData = hospitalData;
         for (int i = 0; i < hospitalData.size(); i++) {
             ContentValues values = new ContentValues();
-//            values.put(KEY_HOSPITAL_ID, hospitalData.get(i).getHospitalId());
-//            values.put(KEY_TIMESTAMP, hospitalData.get(i).getTimestamp());
-            values.put(KEY_STATE_HOSPITAL, hospitalData.get(i).getState());
-            values.put(KEY_CITY_HOSPITAL, hospitalData.get(i).getCity());
-            values.put(KEY_HOSPITAL_PRIVATE, hospitalData.get(i).getPvt());
-            values.put(KEY_CATEGORY_HOSPITAL, hospitalData.get(i).getCategory());
-            values.put(KEY_SYSTEM_OF_MEDICINE, hospitalData.get(i).getSystemsOfMedicine());
-            values.put(KEY_CONTACT_HOSPITAL, hospitalData.get(i).getContact());
-            values.put(KEY_PINCODE_HOSPITAL, hospitalData.get(i).getPincode());
-            values.put(KEY_EMAIL_HOSPITAL, hospitalData.get(i).getEmail());
-            values.put(KEY_WEBSITE_HOSPITAL, hospitalData.get(i).getWebsite());
-            values.put(KEY_Specializations, hospitalData.get(i).getSpecializations());
-            values.put(KEY_SERVICES, hospitalData.get(i).getServices());
+            values.put(STATE, hospitalData.get(i).getState());
+            values.put(CITY, hospitalData.get(i).getCity());
+            values.put(HOSPITAL_NAME, hospitalData.get(i).getPvt());
+            values.put(CATEGORY, hospitalData.get(i).getCategory());
+            values.put(SYSTEM_OF_MEDICINE, hospitalData.get(i).getSystemsOfMedicine());
+            values.put(CONTACT, hospitalData.get(i).getContact());
+            values.put(PINCODE, hospitalData.get(i).getPincode());
+            values.put(EMAIL, hospitalData.get(i).getEmail());
+            values.put(WEBSITE, hospitalData.get(i).getWebsite());
+            values.put(Specializations, hospitalData.get(i).getSpecializations());
+            values.put(SERVICES, hospitalData.get(i).getServices());
+            open();
             db.insert(HOSPITAL_TABLE_NAME, null, values);
+            close();
         }
     }
 
@@ -100,24 +97,26 @@ public class HospitalDataBase {
         this.bloodBankData = bloodBankData;
         for (int i = 0; i < bloodBankData.size(); i++) {
             ContentValues values = new ContentValues();
-            values.put(KEY_STATE, bloodBankData.get(i).getState());
-            values.put(KEY_CITY, bloodBankData.get(i).getCity());
-            values.put(KEY_DISTRICT, bloodBankData.get(i).getDistrict());
-            values.put(KEY_HOSPITAL_NAME, bloodBankData.get(i).getHospitalName());
-            values.put(KEY_ADDRESS, bloodBankData.get(i).getAddress());
-            values.put(KEY_PINCODE, bloodBankData.get(i).getPincode());
-            values.put(KEY_contact, bloodBankData.get(i).getContact());
-            values.put(KEY_HELPLINE, bloodBankData.get(i).getHelpline());
-            values.put(KEY_FAX, bloodBankData.get(i).getFax());
-            values.put(KEY_category, bloodBankData.get(i).getCategory());
-            values.put(KEY_website, bloodBankData.get(i).getWebsite());
-            values.put(KEY_email, bloodBankData.get(i).getEmail());
-            values.put(KEY_BLOOD_COMPONENT, bloodBankData.get(i).getBloodComponent());
-            values.put(KEY_BLOOD_GROUP, bloodBankData.get(i).getBloodGroup());
-            values.put(KEY_SERVICE_TIME, bloodBankData.get(i).getServiceTime());
-            values.put(KEY_LATITUDE, bloodBankData.get(i).getLatitude());
-            values.put(KEY_LONGITUDE, bloodBankData.get(i).getLangitude());
+            values.put(STATE, bloodBankData.get(i).getState());
+            values.put(CITY, bloodBankData.get(i).getCity());
+            values.put(DISTRICT, bloodBankData.get(i).getDistrict());
+            values.put(HOSPITAL_NAME, bloodBankData.get(i).getHospitalName());
+            values.put(ADDRESS, bloodBankData.get(i).getAddress());
+            values.put(PINCODE, bloodBankData.get(i).getPincode());
+            values.put(CONTACT, bloodBankData.get(i).getContact());
+            values.put(HELPLINE, bloodBankData.get(i).getHelpline());
+            values.put(FAX, bloodBankData.get(i).getFax());
+            values.put(CATEGORY, bloodBankData.get(i).getCategory());
+            values.put(WEBSITE, bloodBankData.get(i).getWebsite());
+            values.put(EMAIL, bloodBankData.get(i).getEmail());
+            values.put(BLOOD_COMPONENT, bloodBankData.get(i).getBloodComponent());
+            values.put(BLOOD_GROUP, bloodBankData.get(i).getBloodGroup());
+            values.put(SERVICE_TIME, bloodBankData.get(i).getServiceTime());
+            values.put(LATITUDE, bloodBankData.get(i).getLatitude());
+            values.put(LONGITUDE, bloodBankData.get(i).getLangitude());
+            open();
             db.insert(BLOOD_BANK_TABLE_NAME, null, values);
+            close();
         }
     }
 
@@ -144,7 +143,6 @@ public class HospitalDataBase {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-
             db.execSQL(DATABASE_CREATE_HOSPITAL);
             db.execSQL(DATABASE_CREATE_BLOODBANK);
             Log.e("dbdb", "created");
@@ -159,7 +157,7 @@ public class HospitalDataBase {
         }
     }
 
-    public ArrayList<Hospital> readFromDatabase() {
+    public ArrayList<Hospital> readHospitalDataFromDatabase() {
         ArrayList<Hospital> hospitalDataList = new ArrayList<>();
         String read = "";
         read += "select * from " + HOSPITAL_TABLE_NAME;
@@ -169,8 +167,8 @@ public class HospitalDataBase {
         if (cursor != null) {
             if (cursor.moveToFirst())
                 do {
-                    String hospitalName = cursor.getString(cursor.getColumnIndex(KEY_HOSPITAL_PRIVATE));
-                    long _id = Long.parseLong(cursor.getString(cursor.getColumnIndex(KEY_ROW_ID_HOSPITAL)));
+                    String hospitalName = cursor.getString(cursor.getColumnIndex(HOSPITAL_NAME));
+                    long _id = Long.parseLong(cursor.getString(cursor.getColumnIndex(KEY_ROW_ID)));
                     Hospital hospital = new Hospital();
                     hospital.setRowId(_id);
                     hospital.setPvt(hospitalName);
@@ -184,6 +182,31 @@ public class HospitalDataBase {
         return hospitalDataList;
     }
 
+    public ArrayList<BloodBank> readBloddBankDataFromDB() {
+        ArrayList<BloodBank> bloodBankArrayList = new ArrayList<>();
+        String read = "";
+        read += "select * from " + BLOOD_BANK_TABLE_NAME;
+        open();
+
+        Cursor cursor = db.rawQuery(read, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst())
+                do {
+                    String hospitalName = cursor.getString(cursor.getColumnIndex(HOSPITAL_NAME));
+                    long _id = Long.parseLong(cursor.getString(cursor.getColumnIndex(KEY_ROW_ID)));
+                    BloodBank bloodBank = new BloodBank();
+                    bloodBank.setRowid(_id);
+                    bloodBank.setHospitalName(hospitalName);
+                    bloodBankArrayList.add(bloodBank);
+
+                } while (cursor.moveToNext());
+            cursor.close();
+            close();
+
+        }
+        return bloodBankArrayList;
+    }
+
     public ArrayList<Hospital> stateWiseHospital(String userState, String userCity) {
         ArrayList<Hospital> hospitalList = new ArrayList<>();
         String readData = "";
@@ -193,19 +216,19 @@ public class HospitalDataBase {
         if (cursor != null) {
             if (cursor.moveToFirst())
                 do {
-                    String hospitalName = cursor.getString(cursor.getColumnIndex(KEY_HOSPITAL_PRIVATE));
-//                    String timestamp = cursor.getString(cursor.getColumnIndex(KEY_TIMESTAMP));
-                    String state = cursor.getString(cursor.getColumnIndex(KEY_STATE_HOSPITAL));
-                    String city = cursor.getString(cursor.getColumnIndex(KEY_CITY_HOSPITAL));
-                    String category = cursor.getString(cursor.getColumnIndex(KEY_CATEGORY_HOSPITAL));
-                    String website = cursor.getString(cursor.getColumnIndex(KEY_WEBSITE_HOSPITAL));
-                    String contact = cursor.getString(cursor.getColumnIndex(KEY_CONTACT_HOSPITAL));
-                    String email = cursor.getString(cursor.getColumnIndex(KEY_EMAIL_HOSPITAL));
-                    String systemsOfMedicine = cursor.getString(cursor.getColumnIndex(KEY_SYSTEM_OF_MEDICINE));
-                    String pincode = cursor.getString(cursor.getColumnIndex(KEY_PINCODE_HOSPITAL));
-                    String specialization = cursor.getString(cursor.getColumnIndex(KEY_Specializations));
-                    String services = cursor.getString(cursor.getColumnIndex(KEY_SERVICES));
-                    long hospId = Long.parseLong(cursor.getString(cursor.getColumnIndex(KEY_ROW_ID_HOSPITAL)));
+                    String hospitalName = cursor.getString(cursor.getColumnIndex(HOSPITAL_NAME));
+//                    String timestamp = cursor.getString(cursor.getColumnIndex(TIMESTAMP));
+                    String state = cursor.getString(cursor.getColumnIndex(STATE));
+                    String city = cursor.getString(cursor.getColumnIndex(CITY));
+                    String category = cursor.getString(cursor.getColumnIndex(CATEGORY));
+                    String website = cursor.getString(cursor.getColumnIndex(WEBSITE));
+                    String contact = cursor.getString(cursor.getColumnIndex(CONTACT));
+                    String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+                    String systemsOfMedicine = cursor.getString(cursor.getColumnIndex(SYSTEM_OF_MEDICINE));
+                    String pincode = cursor.getString(cursor.getColumnIndex(PINCODE));
+                    String specialization = cursor.getString(cursor.getColumnIndex(Specializations));
+                    String services = cursor.getString(cursor.getColumnIndex(SERVICES));
+                    long hospId = Long.parseLong(cursor.getString(cursor.getColumnIndex(KEY_ROW_ID)));
                     Hospital hospital = new Hospital();
                     hospital.setState(state);
                     hospital.setCity(city);
@@ -228,7 +251,7 @@ public class HospitalDataBase {
         return hospitalList;
     }
 
-    public Hospital getSinglerecord(long rowId) {
+    public Hospital getSinglerecordForHosp(long rowId) {
         Hospital hospital = new Hospital();
         String read = "";
         read += "select * from " + HOSPITAL_TABLE_NAME + " where _id =" + rowId;
@@ -238,19 +261,18 @@ public class HospitalDataBase {
         if (cursor != null) {
             if (cursor.moveToFirst())
                 do {
-                    String hospitalName = cursor.getString(cursor.getColumnIndex(KEY_HOSPITAL_PRIVATE));
-//                    String timestamp = cursor.getString(cursor.getColumnIndex(KEY_TIMESTAMP));
-                    String state = cursor.getString(cursor.getColumnIndex(KEY_STATE_HOSPITAL));
-                    String city = cursor.getString(cursor.getColumnIndex(KEY_CITY_HOSPITAL));
-                    String category = cursor.getString(cursor.getColumnIndex(KEY_CATEGORY_HOSPITAL));
-                    String website = cursor.getString(cursor.getColumnIndex(KEY_WEBSITE_HOSPITAL));
-                    String contact = cursor.getString(cursor.getColumnIndex(KEY_CONTACT_HOSPITAL));
-
-                    String email = cursor.getString(cursor.getColumnIndex(KEY_EMAIL_HOSPITAL));
-                    String systemsOfMedicine = cursor.getString(cursor.getColumnIndex(KEY_SYSTEM_OF_MEDICINE));
-                    String pincode = cursor.getString(cursor.getColumnIndex(KEY_PINCODE_HOSPITAL));
-                    String specialization = cursor.getString(cursor.getColumnIndex(KEY_Specializations));
-                    String services = cursor.getString(cursor.getColumnIndex(KEY_SERVICES));
+                    String hospitalName = cursor.getString(cursor.getColumnIndex(HOSPITAL_NAME));
+//                    String timestamp = cursor.getString(cursor.getColumnIndex(TIMESTAMP));
+                    String state = cursor.getString(cursor.getColumnIndex(STATE));
+                    String city = cursor.getString(cursor.getColumnIndex(CITY));
+                    String category = cursor.getString(cursor.getColumnIndex(CATEGORY));
+                    String website = cursor.getString(cursor.getColumnIndex(WEBSITE));
+                    String contact = cursor.getString(cursor.getColumnIndex(CONTACT));
+                    String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+                    String systemsOfMedicine = cursor.getString(cursor.getColumnIndex(SYSTEM_OF_MEDICINE));
+                    String pincode = cursor.getString(cursor.getColumnIndex(PINCODE));
+                    String specialization = cursor.getString(cursor.getColumnIndex(Specializations));
+                    String services = cursor.getString(cursor.getColumnIndex(SERVICES));
 
                     hospital.setState(state);
                     hospital.setCity(city);
@@ -261,16 +283,89 @@ public class HospitalDataBase {
                     hospital.setSystemsOfMedicine(systemsOfMedicine);
                     hospital.setServices(services);
                     hospital.setWebsite(website);
-//                    hospital.setTimestamp(timestamp);
                     hospital.setEmail(email);
                     hospital.setPvt(hospitalName);
 //                    hospitalDetails.add(hospital);
                 } while (cursor.moveToNext());
             cursor.close();
-            close();
 
         }
         return hospital;
     }
+
+    public BloodBank getSinglerecord(long rowId) {
+        BloodBank bloodBank = new BloodBank();
+        String read = "";
+        read += "select * from " + BLOOD_BANK_TABLE_NAME + " where _id =" + rowId;
+        open();
+
+        Cursor cursor = db.rawQuery(read, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst())
+                do {
+                    String hospitalName = cursor.getString(cursor.getColumnIndex(HOSPITAL_NAME));
+//                    String timestamp = cursor.getString(cursor.getColumnIndex(TIMESTAMP));
+                    String state = cursor.getString(cursor.getColumnIndex(STATE));
+                    String city = cursor.getString(cursor.getColumnIndex(CITY));
+                    String category = cursor.getString(cursor.getColumnIndex(CATEGORY));
+                    String website = cursor.getString(cursor.getColumnIndex(WEBSITE));
+                    String contact = cursor.getString(cursor.getColumnIndex(CONTACT));
+                    String district = cursor.getString(cursor.getColumnIndex(DISTRICT));
+                    String bloodComp = cursor.getString(cursor.getColumnIndex(BLOOD_COMPONENT));
+                    String bloodGroup = cursor.getString(cursor.getColumnIndex(BLOOD_GROUP));
+                    String helpline = cursor.getString(cursor.getColumnIndex(HELPLINE));
+                    String lang = cursor.getString(cursor.getColumnIndex(LONGITUDE));
+                    String latt = cursor.getString(cursor.getColumnIndex(LATITUDE));
+                    String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+                    String address = cursor.getString(cursor.getColumnIndex(ADDRESS));
+                    String pincode = cursor.getString(cursor.getColumnIndex(PINCODE));
+                    String fax = cursor.getString(cursor.getColumnIndex(FAX));
+                    String servicesTime = cursor.getString(cursor.getColumnIndex(SERVICE_TIME));
+
+                    bloodBank.setState(state);
+                    bloodBank.setCity(city);
+                    bloodBank.setCategory(category);
+                    bloodBank.setFax(fax);
+                    bloodBank.setPincode(pincode);
+                    bloodBank.setContact(contact);
+                    bloodBank.setAddress(address);
+                    bloodBank.setServiceTime(servicesTime);
+                    bloodBank.setWebsite(website);
+                    bloodBank.setEmail(email);
+                    bloodBank.setHospitalName(hospitalName);
+
+                    bloodBank.setDistrict(district);
+                    bloodBank.setBloodComponent(bloodComp);
+                    bloodBank.setHelpline(helpline);
+                    bloodBank.setBloodGroup(bloodGroup);
+                    bloodBank.setLangitude(lang);
+                    bloodBank.setLatitude(latt);
+
+
+                } while (cursor.moveToNext());
+            cursor.close();
+
+        }
+        return bloodBank;
+    }
+
+    public ArrayList<String> cityFromDb(String userState) {
+        ArrayList<String> cityList = new ArrayList<>();
+        String readData = "";
+        readData += "select DISTINCT city from " + HOSPITAL_TABLE_NAME + " where state='" + userState + "'";
+        open();
+        Cursor cursor = db.rawQuery(readData, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst())
+                do {
+                    String city = cursor.getString(cursor.getColumnIndex(CITY));
+                    cityList.add(city);
+                } while (cursor.moveToNext());
+            cursor.close();
+            close();
+        }
+        return cityList;
+    }
+
 
 }

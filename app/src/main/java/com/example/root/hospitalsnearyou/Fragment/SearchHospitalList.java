@@ -63,7 +63,7 @@ public class SearchHospitalList extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                mainactivity.gotoDeatailsFrag1(i, hospNameList.get(i).getState(),hospNameList.get(i).getCity());
+                mainactivity.gotoUserHospDetails(i, hospNameList.get(i).getState(), hospNameList.get(i).getCity());
             }
         });
     }

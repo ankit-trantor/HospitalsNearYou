@@ -41,7 +41,7 @@ public class ListFragment1 extends Fragment {
 
     private void addDataTolist() {
         hospNameList.clear();
-        hospNameList.addAll(dbHelper.readFromDatabase());
+        hospNameList.addAll(dbHelper.readHospitalDataFromDatabase());
         hospNameAdap = new HospNameAdap(getActivity(), hospNameList);
         hospNameAdap.notifyDataSetChanged();
         listView.setAdapter(hospNameAdap);
@@ -51,7 +51,7 @@ public class ListFragment1 extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mainactivity.gotoDeatailsFrag(i);
+                mainactivity.hospitalDetailsFrag(i);
             }
         });
     }
