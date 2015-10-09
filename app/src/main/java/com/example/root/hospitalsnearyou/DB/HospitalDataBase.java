@@ -70,7 +70,7 @@ public class HospitalDataBase {
     ArrayList<BloodBank> bloodBankData = new ArrayList<BloodBank>();
 
     private Context context;
-
+public static boolean bbOrhosp;
 
     public void insertIntoDbHospital(ArrayList<Hospital> hospitalData) {
         this.hospitalData = hospitalData;
@@ -133,6 +133,7 @@ public class HospitalDataBase {
     public void close() {
         dbHelper.close();
     }
+
 
     private class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -207,7 +208,7 @@ public class HospitalDataBase {
         return bloodBankArrayList;
     }
 
-    public ArrayList<Hospital> stateWiseHospital(String userState, String userCity) {
+    public ArrayList<Hospital> stateWiseHospitalForHospital(String userState, String userCity) {
         ArrayList<Hospital> hospitalList = new ArrayList<>();
         String readData = "";
         readData += "select * from " + HOSPITAL_TABLE_NAME + " where city='" + userCity + "' AND state='" + userState + "'";
@@ -244,6 +245,63 @@ public class HospitalDataBase {
                     hospital.setRowId(hospId);
                     hospital.setPvt(hospitalName);
                     hospitalList.add(hospital);
+                } while (cursor.moveToNext());
+            cursor.close();
+            close();
+        }
+        return hospitalList;
+    }
+
+    public ArrayList<BloodBank> stateWiseHospitalForBloodBank(String userState, String userCity) {
+        ArrayList<BloodBank> hospitalList = new ArrayList<>();
+        String readData = "";
+        readData += "select * from " + BLOOD_BANK_TABLE_NAME + " where city='" + userCity + "' AND state='" + userState + "'";
+        open();
+        Cursor cursor = db.rawQuery(readData, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst())
+                do {
+                    String hospitalName = cursor.getString(cursor.getColumnIndex(HOSPITAL_NAME));
+                    String state = cursor.getString(cursor.getColumnIndex(STATE));
+                    String city = cursor.getString(cursor.getColumnIndex(CITY));
+                    String category = cursor.getString(cursor.getColumnIndex(CATEGORY));
+                    String website = cursor.getString(cursor.getColumnIndex(WEBSITE));
+                    String contact = cursor.getString(cursor.getColumnIndex(CONTACT));
+                    String email = cursor.getString(cursor.getColumnIndex(EMAIL));
+                    String bloodCompo = cursor.getString(cursor.getColumnIndex(BLOOD_COMPONENT));
+                    String pincode = cursor.getString(cursor.getColumnIndex(PINCODE));
+                    String blood_group = cursor.getString(cursor.getColumnIndex(BLOOD_GROUP));
+                    String service_time = cursor.getString(cursor.getColumnIndex(SERVICE_TIME));
+
+                    String longitude = cursor.getString(cursor.getColumnIndex(LONGITUDE));
+                    String address = cursor.getString(cursor.getColumnIndex(ADDRESS));
+                    String latitude = cursor.getString(cursor.getColumnIndex(LATITUDE));
+                    String helpline = cursor.getString(cursor.getColumnIndex(HELPLINE));
+                    String fax = cursor.getString(cursor.getColumnIndex(FAX));
+                    String district = cursor.getString(cursor.getColumnIndex(DISTRICT));
+                    long hospId = Long.parseLong(cursor.getString(cursor.getColumnIndex(KEY_ROW_ID)));
+
+                    BloodBank bloodBank = new BloodBank();
+                    bloodBank.setState(state);
+                    bloodBank.setCity(city);
+                    bloodBank.setCategory(category);
+                    bloodBank.setBloodGroup(blood_group);
+                    bloodBank.setPincode(pincode);
+                    bloodBank.setContact(contact);
+                    bloodBank.setBloodComponent(bloodCompo);
+                    bloodBank.setServiceTime(service_time);
+                    bloodBank.setWebsite(website);
+                    bloodBank.setEmail(email);
+                    bloodBank.setLangitude(longitude);
+                    bloodBank.setLatitude(latitude);
+                    bloodBank.setHelpline(helpline);
+                    bloodBank.setFax(fax);
+                    bloodBank.setAddress(address);
+                    bloodBank.setDistrict(district);
+                    bloodBank.setRowid(hospId);
+                    bloodBank.setHospitalName(hospitalName);
+                    hospitalList.add(bloodBank);
+
                 } while (cursor.moveToNext());
             cursor.close();
             close();
@@ -352,19 +410,39 @@ public class HospitalDataBase {
     public ArrayList<String> cityFromDb(String userState) {
         ArrayList<String> cityList = new ArrayList<>();
         String readData = "";
-        readData += "select DISTINCT city from " + HOSPITAL_TABLE_NAME + " where state='" + userState + "'";
+        readData += "select DISTINCT city from " + BLOOD_BANK_TABLE_NAME + " where state='" + userState + "'";
+//        readData +="select bloodBank.city AS ID , hospital.city AS c2 from hospital INNER JOIN bloodBank ";
         open();
         Cursor cursor = db.rawQuery(readData, null);
         if (cursor != null) {
             if (cursor.moveToFirst())
                 do {
                     String city = cursor.getString(cursor.getColumnIndex(CITY));
+//                    String state = cursor.getString(cursor.getColumnIndex("c2"));
                     cityList.add(city);
                 } while (cursor.moveToNext());
             cursor.close();
             close();
         }
         return cityList;
+    }
+
+    public ArrayList<String> stateFromDB() {
+        ArrayList<String> stateList = new ArrayList<>();
+        String readData = "";
+        readData += "select DISTINCT state from " + HOSPITAL_TABLE_NAME;
+        open();
+        Cursor cursor = db.rawQuery(readData, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst())
+                do {
+                    String state = cursor.getString(cursor.getColumnIndex(STATE));
+                    stateList.add(state);
+                } while (cursor.moveToNext());
+            cursor.close();
+            close();
+        }
+        return stateList;
     }
 
 

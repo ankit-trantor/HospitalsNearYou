@@ -26,6 +26,8 @@ public class BloodBankList extends Fragment {
     int position;
     long rowId;
     private MainActivity mainactivity;
+    private String city;
+    private String state;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,13 +37,15 @@ public class BloodBankList extends Fragment {
         mainactivity = (MainActivity) getActivity();
         addListListener();
         dbHelper = new HospitalDataBase(getActivity());
+        city = getArguments().getString("city");
+        state = getArguments().getString("state");
         addDataTolist();
         return rootView;
     }
 
     private void addDataTolist() {
         hospNameList.clear();
-        hospNameList.addAll(dbHelper.readBloddBankDataFromDB());
+        hospNameList.addAll(dbHelper.stateWiseHospitalForBloodBank(state,city));
         hospNameAdap = new BloodBankAdap(getActivity(), hospNameList);
         hospNameAdap.notifyDataSetChanged();
         listView.setAdapter(hospNameAdap);
@@ -51,7 +55,7 @@ public class BloodBankList extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mainactivity.gotoBloodBankDeatails(i);
+                mainactivity.gotoBloodBankDeatails(i,state,city);
             }
         });
     }

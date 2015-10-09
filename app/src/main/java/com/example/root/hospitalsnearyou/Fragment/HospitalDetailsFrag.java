@@ -1,12 +1,9 @@
 package com.example.root.hospitalsnearyou.Fragment;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +40,9 @@ public class HospitalDetailsFrag extends Fragment  {
         View rootView = inflater.inflate(R.layout.fragment_hospital_details, container, false);
         position = getArguments().getInt("position");
         dbHelper = new HospitalDataBase(getActivity());
-        arrayList.addAll(dbHelper.readHospitalDataFromDatabase());
+        String city = getArguments().getString("city");
+        String state = getArguments().getString("state");
+        arrayList.addAll(dbHelper.stateWiseHospitalForHospital(state,city));
         hospital = dbHelper.getSinglerecordForHosp(arrayList.get(position).getRowId());
         findId(rootView);
         emailTextViewAction();
@@ -109,11 +108,11 @@ public class HospitalDetailsFrag extends Fragment  {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Uri s = Uri.parse("geo:0,0?q=" + hospital.getPvt() + ", " + address);
-//        if (address != null) {
-//            showMap(s);
-//        }
-//        return super.onOptionsItemSelected(item);
+        Uri s = Uri.parse("geo:0,0?q=" + hospital.getPvt() + ", " + address);
+        if (address != null) {
+            showMap(s);
+        }
+        return super.onOptionsItemSelected(item);
 //        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 //        List<Address> addresses = null;
 //        try {
@@ -135,15 +134,15 @@ public class HospitalDetailsFrag extends Fragment  {
 //                Log.e("lat",""+lat);
 //            }
 
-        LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//        LocationManager locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+//
+//        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
        // if (location != null) {
 
-            lat = location.getLatitude();
-            longitude = location.getLongitude();
-            Log.d("old", "lat :  " + lat);
-            Log.d("old", "long :  " + longitude);
+//            lat = location.getLatitude();
+//            longitude = location.getLongitude();
+//            Log.d("old", "lat :  " + lat);
+//            Log.d("old", "long :  " + longitude);
 
         //}
 //        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
@@ -159,7 +158,7 @@ public class HospitalDetailsFrag extends Fragment  {
 //            Log.e("hi", "" + addresses.get(0).getAdminArea());//state
 //        }
 
-        return true;
+//        return true;
     }
 
     private void findId(View rootView) {

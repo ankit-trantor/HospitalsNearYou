@@ -31,7 +31,9 @@ public class BloodBankDetails extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_blood_bank_details, container, false);
         position = getArguments().getInt("position");
         dbHelper = new HospitalDataBase(getActivity());
-        arrayList.addAll(dbHelper.readBloddBankDataFromDB());
+        String city = getArguments().getString("city");
+        String state = getArguments().getString("state");
+        arrayList.addAll(dbHelper.stateWiseHospitalForBloodBank(state,city));
         bloodBank = dbHelper.getSinglerecord(arrayList.get(position).getRowid());
         findId(rootView);
 //        emailTextViewAction();

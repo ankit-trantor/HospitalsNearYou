@@ -22,11 +22,6 @@ import java.util.ArrayList;
 public class HomeFrag extends Fragment {
     AutoCompleteTextView edtState, edtCity;
     Button findHospital, findBloodBank;
-    String[] state = {"Delhi", "Andhra Pradesh", "Kerala", "Karnataka", "Tamil Nadu", "Punjab", "Haryana", "Sikkim", "Rajasthan",
-            "Gujarat", "Assam", "Jammu and Kashmir",
-            "Himachal Pradesh"};
-    String[] city = {"Delhi", "Pune", "Mumbai", "Rohtak", "North West Delhi", "Madhya Pradesh", "Cochin", "Kannur", "Karakonam", "Alappuzha", "South Delhi", "West Delhi",
-            "South West Delhi", "Chennai", "Ludhiana", "Jaipur", "Patiala", "Mangalore", "Indore", "Bengaluru", "Amritsar", "Zirakpur", "Ropar", "Sirsa", "Jodhpur", "Gangtok", "Jammu", "Kangra"};
     ArrayAdapter<String> adapterForState;
     ArrayAdapter<String> adapterForCity;
     public HomeFrag() {
@@ -36,8 +31,10 @@ public class HomeFrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        HospitalDataBase hospitalDataBase = new HospitalDataBase(getActivity());
+         ArrayList<String> stateList = hospitalDataBase.stateFromDB();
         adapterForState = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.select_dialog_item, state);
+                (getActivity(), android.R.layout.select_dialog_item, stateList);
 
         //Getting the instance of AutoCompleteTextView
     }
@@ -48,12 +45,10 @@ public class HomeFrag extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         edtCity = (AutoCompleteTextView) rootView.findViewById(R.id.city);
         edtState = (AutoCompleteTextView) rootView.findViewById(R.id.state);
-
-
-
-        edtState.setThreshold(1);//will start working from first character
+        edtState.setThreshold(3);//will start working from first character
         edtState.setAdapter(adapterForState);//setting the adapterForState data into the AutoCompleteTextView
         edtState.setTextColor(Color.BLACK);
 
@@ -89,6 +84,16 @@ public class HomeFrag extends Fragment {
                 bundle.putString("city", city);
                 bundle.putString("state", state);
                 searchHospitalList.setArguments(bundle);
+                HospitalDataBase.bbOrhosp=true;
+                HospitalDataBase hospitalDataBase = new HospitalDataBase(getActivity());
+                if (hospitalDataBase.stateWiseHospitalForBloodBank(state, city).size() > 0) {
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame_container, searchHospitalList).commit();
+                } else {
+                    Toast.makeText(getActivity(), "No Records Found", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -109,17 +114,11 @@ public class HomeFrag extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("city", city);
                 bundle.putString("state", state);
+                HospitalDataBase.bbOrhosp=false;
                 searchHospitalList.setArguments(bundle);
                 HospitalDataBase hospitalDataBase = new HospitalDataBase(getActivity());
-//                ArrayList<String> cityList = hospitalDataBase.cityFromDb(state);
-//
-//                adapterForCity = new ArrayAdapter<String>
-//                        (getActivity(), android.R.layout.select_dialog_item, cityList);
-//                edtCity.setThreshold(1);
-//                edtCity.setAdapter(adapterForCity);
-//                edtCity.setTextColor(Color.BLACK);
 
-                if (hospitalDataBase.stateWiseHospital(state, city).size() > 0) {
+                if (hospitalDataBase.stateWiseHospitalForHospital(state, city).size() > 0) {
 
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

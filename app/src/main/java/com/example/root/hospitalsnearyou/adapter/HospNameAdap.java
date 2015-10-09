@@ -44,7 +44,7 @@ public class HospNameAdap extends ArrayAdapter<Hospital> {
         textView.setText(modelclass.getPvt());
         textView.setTextColor(Color.BLACK);
         ImageView imageView = (ImageView) row.findViewById(R.id.playlist_image);
-        imageView.setImageResource(R.drawable.w1);
+        imageView.setImageResource(R.drawable.hospital_icon1);
 
 
        /* row.setOnClickListener(new View.OnClickListener() {

@@ -129,13 +129,13 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
-            android:textSize="18dp"
             android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/bloodComponent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textSize="18dp"
                 android:layout_weight="1.6"
                 android:text="Blood Component : "
                 android:textColor="@color/abc_primary_text_disable_only_material_light"></TextView>
