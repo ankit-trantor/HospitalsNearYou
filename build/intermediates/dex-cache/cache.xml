@@ -2,20 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-faf45822e6ef079f88fa50a16885e585f9631e84.jar" />
-    </item>
-    <item
-        jar="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.0"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/pre-dexed/debug/classes-8086bf4f960f6353bc853f6e825e9a8c3dff45d0.jar" />
-    </item>
-    <item
         jar="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.0"
@@ -23,11 +9,32 @@
         <dex dex="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/pre-dexed/debug/classes-acdb1da65511b1a9e0c86f93dcf8d7f9dea0283d.jar" />
     </item>
     <item
+        jar="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-faf45822e6ef079f88fa50a16885e585f9631e84.jar" />
+    </item>
+    <item
         jar="/root/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
         jumboMode="false"
         revision="23.0.0"
         sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
         <dex dex="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-cb45de25033c3665320dd2cafe5df424fd028375.jar" />
+    </item>
+    <item
+        jar="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/exploded-aar/com.android.support/design/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/pre-dexed/debug/classes-cbfcb7f6a74ea7e170f7c6a0fc665885d2a4101c.jar" />
+    </item>
+    <item
+        jar="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/home/synerzip/Documents/MyGitProjects/Hospitals/app/build/intermediates/pre-dexed/debug/classes-8086bf4f960f6353bc853f6e825e9a8c3dff45d0.jar" />
     </item>
 
 </items>

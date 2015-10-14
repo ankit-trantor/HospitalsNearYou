@@ -129,12 +129,7 @@ public class GotoUserHospDetails extends Fragment {
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-//        MenuItem menuItem = menu.findItem(R.id.map);
-//        menuItem.setVisible(true);
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -169,7 +164,6 @@ public class GotoUserHospDetails extends Fragment {
         city = (TextView) rootView.findViewById(R.id.Cityname);
         district = (TextView) rootView.findViewById(R.id.DistrictName);
         serviceTime = (TextView) rootView.findViewById(R.id.serviceTimeName);
-        lattitude = (TextView) rootView.findViewById(R.id.lattitudeName);
         category = (TextView) rootView.findViewById(R.id.categoryName);
         pincode = (TextView) rootView.findViewById(R.id.pincodeName);
         contact = (TextView) rootView.findViewById(R.id.contactName);
@@ -177,7 +171,6 @@ public class GotoUserHospDetails extends Fragment {
         address = (TextView) rootView.findViewById(R.id.addressName);
         bloodComponent = (TextView) rootView.findViewById(R.id.bloodComponentName);
         bloodGroup = (TextView) rootView.findViewById(R.id.bloodGroupName);
-        langitude = (TextView) rootView.findViewById(R.id.longitudeName);
         fax = (TextView) rootView.findViewById(R.id.faxName);
         setAllTextForBloodBank();
     }
@@ -194,6 +187,13 @@ public class GotoUserHospDetails extends Fragment {
 
 
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.findItem(R.id.map);
+        menuItem.setVisible(true);
+    }
+
 
     private void setAllTextForHospital() {
         email.setText(hospital.getEmail());
@@ -242,8 +242,6 @@ public class GotoUserHospDetails extends Fragment {
         bloodGroup.setText(bloodBank.getBloodGroup());
         address.setText(bloodBank.getAddress());
         pincode.setText(bloodBank.getPincode());
-        lattitude.setText(bloodBank.getLatitude());
-        langitude.setText(bloodBank.getLangitude());
         fax.setText(bloodBank.getFax());
         helpline.setText(bloodBank.getHelpline());
         contact.setText(bloodBank.getContact());

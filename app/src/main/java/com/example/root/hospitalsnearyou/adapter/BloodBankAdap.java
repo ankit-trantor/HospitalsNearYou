@@ -46,7 +46,7 @@ public class BloodBankAdap extends ArrayAdapter<BloodBank> {
         textView.setText(modelclass.getHospitalName());
         textView.setTextColor(Color.BLACK);
         ImageView imageView = (ImageView) row.findViewById(R.id.playlist_image);
-        imageView.setImageResource(R.drawable.blod);
+        imageView.setImageResource(R.drawable.blood);
 
 
        /* row.setOnClickListener(new View.OnClickListener() {

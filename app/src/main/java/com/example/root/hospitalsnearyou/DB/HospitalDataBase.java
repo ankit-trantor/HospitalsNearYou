@@ -70,7 +70,8 @@ public class HospitalDataBase {
     ArrayList<BloodBank> bloodBankData = new ArrayList<BloodBank>();
 
     private Context context;
-public static boolean bbOrhosp;
+    public static boolean bbOrhosp;
+    public static boolean checkBundle=false;
 
     public void insertIntoDbHospital(ArrayList<Hospital> hospitalData) {
         this.hospitalData = hospitalData;

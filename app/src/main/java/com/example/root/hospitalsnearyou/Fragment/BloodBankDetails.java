@@ -4,7 +4,10 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ public class BloodBankDetails extends Fragment {
     BloodBank bloodBank;
     Bundle bundle = new Bundle();
     int position;
+    String addressMap;
     ArrayList<BloodBank> arrayList = new ArrayList<>();
     HospitalDataBase dbHelper;
 
@@ -50,7 +54,6 @@ public class BloodBankDetails extends Fragment {
         city = (TextView) rootView.findViewById(R.id.Cityname);
         district = (TextView) rootView.findViewById(R.id.DistrictName);
         serviceTime = (TextView) rootView.findViewById(R.id.serviceTimeName);
-        lattitude = (TextView) rootView.findViewById(R.id.lattitudeName);
         category = (TextView) rootView.findViewById(R.id.categoryName);
         pincode = (TextView) rootView.findViewById(R.id.pincodeName);
         contact = (TextView) rootView.findViewById(R.id.contactName);
@@ -58,15 +61,15 @@ public class BloodBankDetails extends Fragment {
         address = (TextView) rootView.findViewById(R.id.addressName);
         bloodComponent = (TextView) rootView.findViewById(R.id.bloodComponentName);
         bloodGroup = (TextView) rootView.findViewById(R.id.bloodGroupName);
-        langitude = (TextView) rootView.findViewById(R.id.longitudeName);
         fax = (TextView) rootView.findViewById(R.id.faxName);
         setAllText();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Uri s = Uri.parse("geo:0,0?q=" + bloodBank.getHospitalName() + ", " + address);
-        if (address != null) {
+        Uri s = Uri.parse("geo:0,0?q=" + bloodBank.getHospitalName() + ", " + addressMap);
+        Log.e("uri",""+s);
+        if (addressMap != null) {
             showMap(s);
         }
         return super.onOptionsItemSelected(item);
@@ -83,9 +86,8 @@ public class BloodBankDetails extends Fragment {
         bloodComponent.setText(bloodBank.getBloodComponent());
         bloodGroup.setText(bloodBank.getBloodGroup());
         address.setText(bloodBank.getAddress());
+        addressMap = bloodBank.getAddress();
         pincode.setText(bloodBank.getPincode());
-        lattitude.setText(bloodBank.getLatitude());
-        langitude.setText(bloodBank.getLangitude());
         fax.setText(bloodBank.getFax());
         helpline.setText(bloodBank.getHelpline());
         contact.setText(bloodBank.getContact());
@@ -93,6 +95,13 @@ public class BloodBankDetails extends Fragment {
         district.setText(bloodBank.getDistrict());
         serviceTime.setText(bloodBank.getServiceTime());
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem menuItem = menu.findItem(R.id.map);
+        menuItem.setVisible(true);
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -25,7 +25,7 @@ public class HospitalList extends Fragment {
     View rootView;
     int position;
     long rowId;
-    String city,state;
+    String city, state;
     private MainActivity mainactivity;
 
     @Override
@@ -36,15 +36,17 @@ public class HospitalList extends Fragment {
         mainactivity = (MainActivity) getActivity();
         addListListener();
         dbHelper = new HospitalDataBase(getActivity());
-        city = getArguments().getString("city");
-        state = getArguments().getString("state");
-        addDataTolist();
+        if (HospitalDataBase.checkBundle == true) {
+            city = getArguments().getString("city");
+            state = getArguments().getString("state");
+            addDataTolist();
+        }
         return rootView;
     }
 
     private void addDataTolist() {
         hospNameList.clear();
-        hospNameList.addAll(dbHelper.stateWiseHospitalForHospital(state,city));
+        hospNameList.addAll(dbHelper.stateWiseHospitalForHospital(state, city));
         hospNameAdap = new HospNameAdap(getActivity(), hospNameList);
         hospNameAdap.notifyDataSetChanged();
         listView.setAdapter(hospNameAdap);
@@ -54,7 +56,7 @@ public class HospitalList extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mainactivity.hospitalDetailsFrag(i,state,city);
+                mainactivity.hospitalDetailsFrag(i, state, city);
             }
         });
     }

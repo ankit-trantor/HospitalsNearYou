@@ -105,6 +105,7 @@ public class DownloadService extends Service {
                     hospital.setSpecializations(strings.get(9).toString());
                     hospital.setServices(strings.get(10).toString());
                     arrayList.add(hospital);
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -112,8 +113,11 @@ public class DownloadService extends Service {
             Log.e("Size ::::", "" + arrayList.size());
 //            hospitalDataBase.open();
             if (arrayList.size() > 0) {
+
+// To dismiss the d
                 hospitalDataBase.open();
                 hospitalDataBase.insertIntoDbHospital(arrayList);
+
             }
 
         }

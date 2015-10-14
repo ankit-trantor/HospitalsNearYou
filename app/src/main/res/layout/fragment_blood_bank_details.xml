@@ -7,9 +7,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
         android:orientation="vertical"
         tools:context="com.example.root.hospitalsnearyou.Fragment.BloodBankDetails">
 
@@ -135,10 +132,10 @@
                 android:id="@+id/bloodComponent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
                 android:layout_weight="1.6"
                 android:text="Blood Component : "
-                android:textColor="@color/abc_primary_text_disable_only_material_light"></TextView>
+                android:textColor="@color/abc_primary_text_disable_only_material_light"
+                android:textSize="18dp"></TextView>
 
             <TextView
                 android:id="@+id/bloodComponentName"
@@ -200,6 +197,7 @@
                 android:layout_toRightOf="@+id/State"
                 android:layout_weight="2.4"></TextView>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -236,7 +234,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingTop="10dp">
@@ -245,7 +243,6 @@
                 android:id="@+id/address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/City"
                 android:layout_weight="1.6"
                 android:text="Address : "
                 android:textColor="@color/abc_primary_text_disable_only_material_light"
@@ -261,10 +258,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp">
 
             <TextView
                 android:id="@+id/contact"
@@ -412,55 +408,6 @@
             android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:id="@+id/lattitude"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.6"
-                android:text="Lattitude : "
-                android:textColor="@color/abc_primary_text_disable_only_material_light"
-                android:textSize="18dp"></TextView>
-
-            <TextView
-                android:id="@+id/lattitudeName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2.4"></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:id="@+id/longitude"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.6"
-                android:text="Longitude : "
-                android:textColor="@color/abc_primary_text_disable_only_material_light"
-                android:textSize="18dp"></TextView>
-
-            <TextView
-                android:id="@+id/longitudeName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2.4"></TextView>
-        </LinearLayout>
 
 
     </LinearLayout>
